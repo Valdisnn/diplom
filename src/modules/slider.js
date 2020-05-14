@@ -5,6 +5,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     const slide = slider.querySelectorAll(sliderItemClass);
 
     const createDots = () => {
+
         const ul = document.createElement('ul');
         ul.setAttribute("class", "slider-dots");
         slider.appendChild(ul);
@@ -22,6 +23,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     };
 
     const createArrows = () => {
+
         const btnPrev = document.createElement('a');
         const btnNext = document.createElement('a');
         btnPrev.setAttribute("class", "slider-btn prev");
@@ -47,12 +49,14 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
         interval;
 
     const prevSlide = (elem, index, lastIndex, strClass) => {
+
         elem[index].classList.remove(strClass);
         if (slideCount > 1 && lastIndex !== slide.length) {
             elem[lastIndex].classList.add(strClass);
         }
     };
     const nextSlide = (elem, index, lastIndex, strClass) => {
+
         elem[index].classList.add(strClass);
         if (slideCount > 1 && lastIndex !== slide.length) {
             elem[lastIndex].classList.remove(strClass);
@@ -60,6 +64,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     };
 
     const autoPlaySlide = () => {
+
         prevSlide(slide, firstSlide, lastSlide, 'slide-active');
         if (dots) {
             prevSlide(dot, firstSlide, lastSlide, 'dot-active');
@@ -82,14 +87,17 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     };
 
     const startSlide = (time = 1500) => {
+
         interval = setInterval(autoPlaySlide, time);
     };
 
     const stopSlide = () => {
+
         clearInterval(interval);
     };
 
     slider.addEventListener('click', (event) => {
+
         event.preventDefault();
         let target = event.target;
         if (!target.matches('.slider-btn, .dot')) {
@@ -119,8 +127,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
                 }
             });
         }
-
-
+        //////
         if (firstSlide >= slide.length) {
             firstSlide = 0;
         }
@@ -140,6 +147,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     });
 
     slider.addEventListener('mouseover', (event) => {
+
         if (event.target.matches('.slider-btn') ||
             event.target.matches('.dot')) {
             stopSlide();
@@ -147,6 +155,7 @@ const slider = (sliderClass, sliderItemClass, dots, arrows, slideCount, time) =>
     });
 
     slider.addEventListener('mouseout', (event) => {
+        
         if (event.target.matches('.slider-btn') ||
             event.target.matches('.dot')) {
             startSlide();
