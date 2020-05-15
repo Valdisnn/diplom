@@ -6,7 +6,10 @@ import blockAndShowMenu from './modules/blockAndShowMenu';
 import arrow from './modules/arrow';
 import changeClub from './modules/changeClub';
 import gift from './modules/gift';
+import calc from './modules/calc';
 
+
+calc();
 gift();
 changeClub();
 // появление стрелки
