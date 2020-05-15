@@ -1,8 +1,7 @@
 'use strict';
 
-const carousel = (sliderClass, sliderItemClass, arrows, slideCount, time) => {
+const carousel = (sliderClass, item, arrows, slideCount, time) => {
     const slider = document.querySelector(sliderClass);
-    const slide = document.querySelector(sliderItemClass);
     const sliderBlock = slider.querySelector('.slider-block');
     let interval;
 
