@@ -1,7 +1,8 @@
 'use strict';
 
-const carousel = (sliderClass, item, arrows, slideCount, time) => {
+const carousel = (sliderClass, sliderItemClass, arrows, slideCount, time) => {
     const slider = document.querySelector(sliderClass);
+    const slide = document.querySelector(sliderItemClass);
     const sliderBlock = slider.querySelector('.slider-block');
     let interval;
 
@@ -44,7 +45,7 @@ const carousel = (sliderClass, item, arrows, slideCount, time) => {
 
         const first = sliderBlock.firstElementChild;
         const firstClone = first.cloneNode(true);
-        sliderBlock.insertAdjacentElement(`afterbegin`, firstClone);
+        sliderBlock.insertAdjacentElement(`beforeend`, firstClone);
         first.parentNode.removeChild(first);
     };
 
@@ -52,7 +53,7 @@ const carousel = (sliderClass, item, arrows, slideCount, time) => {
 
         if (str === 'next') {
             next();
-        } else if (str === 'prev') {
+        } if (str === 'prev') {
             prev();
         }
         createSlider();
