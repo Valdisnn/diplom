@@ -7,10 +7,18 @@ import arrow from './modules/arrow';
 import changeClub from './modules/changeClub';
 import gift from './modules/gift';
 import calc from './modules/calc';
+import modalOne from './modules/modalOne';
+import modalTwo from './modules/modalTwo';
 
-
+// первое модальное окно (бесплатный визит)
+modalOne();
+// первое модальное окно (перезвоните мне)
+modalTwo();
+// функция кальулятора
 calc();
+// модалка с подарком
 gift();
+// модалка с выбором клуба
 changeClub();
 // появление стрелки
 arrow();
