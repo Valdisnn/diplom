@@ -1,109 +1,163 @@
 'use strict';
 
-const carousel = (sliderClass, item, arrows, slideCount, time) => {
-    const slider = document.querySelector(sliderClass);
-    const sliderBlock = slider.querySelector('.slider-block');
-    let interval;
+class carousel {
+  constructor({
+    main,
+    wrap,
+    next,
+    prev,
+    infinity = false,
+    position = 0,
+    slidesToShow = 3,
+    responsive = [],
 
-    const createArrows = () => {
-        const btnPrev = document.createElement(`a`),
-            btnNext = document.createElement(`a`);
-
-        btnPrev.setAttribute("class", "slider-btn prev");
-        btnPrev.setAttribute("id", "arrow-left");
-        slider.appendChild(btnPrev);
-        btnNext.setAttribute("class", "slider-btn next");
-        btnNext.setAttribute("id", "arrow-right");
-        slider.appendChild(btnNext);
+  }) {
+    this.main = document.querySelector(main);
+    this.wrap = document.querySelector(wrap);
+    this.slides = document.querySelector(wrap).children;
+    this.next = document.querySelector(next);
+    this.prev = document.querySelector(prev);
+    this.slidesToShow = slidesToShow;
+    this.options = {
+      position,
+      infinity,
+      widthSlide: Math.floor(100 / this.slidesToShow),
+      maxPosition: this.slides.length - this.slidesToShow,
     };
-    if (arrows) {
-        createArrows();
+    this.responsive = responsive;
+  }
+
+  init() {
+    this.addGloClass();
+    this.addStyle();
+
+    if (this.prev && this.next) {
+      this.controlSlider();
+    } else {
+      this.addArrow();
+      this.controlSlider();
     }
+    if (this.responsive) {
+      this.responseInit();
+    }
+  }
 
-    const createSlider = () => {
+  addGloClass() {
+    this.main.classList.add('glo-slider');
+    this.wrap.classList.add('glo-slider__wrap');
+    for (const item of this.slides) {
+      item.classList.add('glo-slider__item');
+    }
+  }
 
-        const sliders = sliderBlock.querySelectorAll('.slide');
-        sliders.forEach(item => {
-            item.classList.remove('slide-active');
-        });
+  addStyle() {
+    let style = document.querySelector('#sliderCarousel-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'sliderCarousel-style';
+    }
+    style.textContent = `
+      .glo-slider{
+        overflow: hidden !important;
+        padding: 0 !important
+      }
+      .glo-slider__wrap{
+        display: flex !important;
+        transition: transform 0.5s !important;
+        will-change: transform !important;
+      }
+      .glo-slider__item{
+        align-items: center  !important;
+        justify-content: center  !important;
+        flex: 0 0 ${this.options.widthSlide}% !important;
+        margin: 0 auto !important;
+      }
+      .glo-slider__prev,
+      .glo-slider__next {
+        //margin: 0 10px;
+        border: transparent;
+        background: transparent;
+      }
+      .glo-slider__next {
+        //border-left-color: #19b5fe;
+      }
+      .glo-slider__prev {
+        //border-right-color: #19b5fe;
+      } 
+      .glo-slider__prev:hover,
+      .glo-slider__prev:focus,
+      .glo-slider__next:hover,
+      .glo-slider__next:focus{
+        cursor: pointer;
+        outline: none;
+        background: transparent;
+      }
+      `;
+    document.head.append(style);
+  }
 
-        for (let i = 0; i < slideCount; i++) {
-            sliders[i].classList.add(`slide-active`);
+  controlSlider() {
+    this.prev.addEventListener('click', this.prevSlider.bind(this));
+    this.next.addEventListener('click', this.nextSlider.bind(this));
+  }
+
+  prevSlider() {
+    if (this.options.infinity || +this.options.position > 0) {
+      --this.options.position;
+      if (+this.options.position < 0) {
+        this.options.position = this.options.maxPosition;
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`;
+    }
+  }
+
+  nextSlider() {
+    if (this.options.infinity || +this.options.position < this.options.maxPosition) {
+      ++this.options.position;
+      if (this.options.position > (this.slides.length - this.slidesToShow)) {
+        this.options.position = 0;
+      }
+      this.wrap.style.transform = `translateX(-${this.options.position * this.options.widthSlide}%)`;
+    }
+  }
+
+  addArrow() {
+    this.prev = document.createElement('button');
+    this.next = document.createElement('button');
+
+    this.prev.className = 'glo-slider__prev';
+    this.next.className = 'glo-slider__next';
+
+    this.main.append(this.prev);
+    this.main.append(this.next);
+  }
+
+  responseInit() {
+    const slidesToShowDefault = this.slidesToShow,
+      allRespone = this.responsive.map(item => item.breackpoint),
+      maxResponse = Math.max(...allRespone);
+
+    const checkResponse = () => {
+      const widthWindow = document.documentElement.clientWidth;
+      if (widthWindow < maxResponse) {
+        for (let i = 0; i < allRespone.length; i++) {
+          if (widthWindow < allRespone[i]) {
+            this.slidesToShow = this.responsive[i].slideToShow;
+            this.options.widthSlide = Math.floor(100 / this.slidesToShow);
+            this.addStyle();
+          }
         }
+      } else {
+        this.slidesToShow = slidesToShowDefault;
+        this.options.widthSlide = Math.floor(100 / this.slidesToShow);
+        this.addStyle();
+      }
     };
 
-    const next = () => {
+    checkResponse();
 
-        const last = sliderBlock.lastElementChild;
-        const lastClone = last.cloneNode(true);
-        sliderBlock.insertAdjacentElement(`afterbegin`, lastClone);
-        last.parentNode.removeChild(last);
-    };
-
-    const prev = () => {
-
-        const first = sliderBlock.firstElementChild;
-        const firstClone = first.cloneNode(true);
-        sliderBlock.insertAdjacentElement(`beforeend`, firstClone);
-        first.parentNode.removeChild(first);
-    };
-
-    const moveSliders = (str) => {
-
-        if (str === 'next') {
-            next();
-        } if (str === 'prev') {
-            prev();
-        }
-        createSlider();
-    };
-
-    const autoPlaing = () => {
-
-        moveSliders('next');
-    };
-
-    const startSlider = (time = 1500) => {
-
-        interval = setInterval(autoPlaing, time);
-    };
-    startSlider(time);
-
-    const stopSlide = () => {
-
-        clearInterval(interval);
-    };
-
-    const eventOfMouse = (event, callback) => {
-
-        if (event.target.matches(`.slider-btn`) || event.target.matches(`.dot`)) {
-            callback();
-        }
-    };
-
-    slider.addEventListener('mouseover', (event) => {
-
-        eventOfMouse(event, stopSlide);
-    });
-
-    slider.addEventListener('mouseout', (event) => {
-
-        eventOfMouse(event, startSlider);
-    });
-
-    const nextArrow = slider.querySelector('.next');
-    const prevArrow = slider.querySelector('.prev');
-
-    nextArrow.addEventListener('click', (event) => {
-
-        event.preventDefault();
-        moveSliders('next');
-    });
-    prevArrow.addEventListener('click', (event) => {
-        
-        event.preventDefault();
-        moveSliders('prev');
-    });
-};
+    window.addEventListener('resize', checkResponse);
+  }
+}
 
 export default carousel;

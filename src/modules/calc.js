@@ -2,100 +2,72 @@
 
 const calc = () => {
 
-    const mainCalculator = document.querySelector('.main-calculator');
+  const time = document.querySelector('.time'),
+    promocode = document.getElementById('promocode'),
+    inputMozaika = document.getElementById('card_leto_mozaika'),
+    inputSchelkovo = document.getElementById('card_leto_schelkovo'),
+    club = document.querySelectorAll('.club');
 
-    if (!mainCalculator) {
-        return;
-    }
+  let priceTotal = document.getElementById('price-total');
 
-    const priceTotal = document.querySelector('#price-total');
-    const cardType = document.querySelectorAll('.card-type');
-    const inputCode = document.querySelector('.input-code');
-    const inputName = document.querySelector('.input-name');
-    const inputPhone = document.querySelector('.input-phone');
-    const cardCheck = document.querySelector('#card_check');
-    const typeClub = document.querySelectorAll('.type-club');
-    const cardOrder = document.querySelector('#card_order');
+  if (time) {
+    const sale = () => {
 
-    const subscription = {
-        price: '',
-        card: '',
-        code: '',
-        name: '',
-        phone: '',
-        club: '',
-        licenz: false,
+      promocode.addEventListener('change', () => {
+
+        if (promocode.value === 'ТЕЛО2020') {
+          priceTotal.textContent = priceTotal.textContent - Math.ceil(((priceTotal.textContent / 100) * 30));
+        }
+      });
     };
 
-    const assigment = () => {
+    const check = () => {
 
-        cardType.forEach((item) => {
-            if (item.checked) {
-                subscription.card = item.value;
-            }
+      if (inputMozaika.checked) {
+        priceTotal.textContent = 1999;
+        let firstInput = time.querySelector('input');
+        firstInput.checked = true;
+        time.addEventListener('change', (event) => {
+
+          let target = event.target;
+          if (+target.value === 6) {
+            priceTotal.textContent = 9900;
+          } else if (+target.value === 9) {
+            priceTotal.textContent = 14900;
+          } else if (+target.value === 12) {
+            priceTotal.textContent = 19900;
+          } else if (+target.value === 1) {
+            priceTotal.textContent = 1999;
+          }
         });
+        sale();
+      } else if (inputSchelkovo.checked) {
+        priceTotal.textContent = 2999;
+        let firstInput = time.querySelector('input');
+        firstInput.checked = true;
+        time.addEventListener('change', (event) => {
 
-        typeClub.forEach((item) => {
-            if (item.checked) {
-                subscription.club = item.value;
-            }
+          let target = event.target;
+          if (+target.value === 6) {
+            priceTotal.textContent = 14990;
+          } else if (+target.value === 9) {
+            priceTotal.textContent = 21990;
+          } else if (+target.value === 12) {
+            priceTotal.textContent = 24990;
+          } else if (+target.value === 1) {
+            priceTotal.textContent = 2999;
+          }
         });
-
-        subscription.licenz = cardCheck.checked;
-        subscription.code = inputCode.value;
-        subscription.name = inputName.value;
-        subscription.phone = inputPhone.value;
+        sale();
+      }
     };
+    check();
 
-    const countData = () => {
-
-        let coast = 0;
-        let discount = 1;
-        const dataSelection = () => {
-
-            if (subscription.club === 'mozaika') {
-                const oneMonth = 1999,
-                    sixMonths = 9900,
-                    nineMonth = 13900,
-                    twelveMonths = 19900;
-                coast = (subscription.card === '1') ? oneMonth : (subscription.card === '6') ?
-                    sixMonths : (subscription.card === '9') ?
-                    nineMonth : (subscription.card === '12') ?
-                    twelveMonths : '';
-            } else if (subscription.club === 'schelkovo') {
-                const oneMonth = 2999,
-                    sixMonths = 14900,
-                    nineMonth = 21990,
-                    twelveMonths = 24990;
-                coast = (subscription.card === '1') ? oneMonth : (subscription.card === '6') ?
-                    sixMonths : (subscription.card === '9') ?
-                    nineMonth : (subscription.card === '12') ?
-                    twelveMonths : '';
-            }
-
-            if (subscription.code === 'ТЕЛО2020') {
-                discount = coast * 30 / 100;
-            } else {
-                discount = '';
-            }
-        };
-
-        const outputData = () => {
-
-            priceTotal.textContent = Math.floor(coast - discount);
-        };
-
-        dataSelection();
-        outputData();
-    };
-
-    assigment();
-    countData();
-
-    cardOrder.addEventListener('change', () => {
-        assigment();
-        countData();
+    club.forEach((elem) => {
+      
+      elem.addEventListener('change', check);
     });
+  }
 };
 
 export default calc;

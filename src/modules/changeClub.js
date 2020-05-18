@@ -1,12 +1,22 @@
 'use strict';
 
 const changeClub = () => {
-    const clubsBody = document.querySelector('.clubs-body');
-    const clubsList = document.querySelector('.clubs-list');
+  
+  const dropdownList = document.getElementById('dropdown-list'),
+        dropdownListItem = dropdownList.querySelectorAll('.dropdown-list__item'),
+        clubSelect = document.querySelector('.club-select');
 
-    clubsList.addEventListener('click', () => {
-        clubsBody.style.display = (clubsBody.style.display !== 'block') ? 'block' : 'none';
-    });
+  clubSelect.addEventListener('click', (event) => {
+    let target = event.target;
+    console.log('target: ', target);
+    if (target === dropdownList || target === dropdownListItem[0] || target === dropdownListItem[1]) {
+      return;
+    }
+    dropdownList.classList.toggle('dropdown-list--active');
+    for (let i = 0; i < dropdownListItem.length; i++) {
+      dropdownListItem[i].classList.toggle('dropdown-list__item--active');
+    }
+  });
 };
 
 export default changeClub;
