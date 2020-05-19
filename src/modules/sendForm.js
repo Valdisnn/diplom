@@ -6,14 +6,16 @@ const sendForm = () => {
     successMessage = 'Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время 🙂',
     thanksModal = document.getElementById('thanks'),
     formContent = thanksModal.querySelector('.form-content'),
-    formContentText = formContent.querySelector('p');
+    formContentText = formContent.querySelector('p'),
+    freeVisitPopup = document.getElementById('free_visit_form'),
+    callbackPopup = document.getElementById('callback_form');
 
   const statusMessage = document.createElement('div');
   statusMessage.style.cssText = 'font-size: 2rem; color: white;';
 
   const checkAlert = () => {
 
-    alert('Поставьте галочку, что вы согласны на обработку персональных данных');
+    //alert('Поставьте галочку, что вы согласны на обработку персональных данных');
   };
 
   const postData = (body) => {
@@ -41,7 +43,7 @@ const sendForm = () => {
 
       for (let i = 0; i < allInputs.length; i++) {
         if (allInputs[i].value === '') {
-          alert('Заполните все поля в форме!');
+          //alert('Заполните все поля в форме!');
           return;
         }
       }
@@ -84,11 +86,24 @@ const sendForm = () => {
           setTimeout(() => {
             thanksModal.style.display = 'none';
           }, 3000);
+          setTimeout(() => {
+            freeVisitPopup.style.display = 'none';
+          }, 0);
+          setTimeout(() => {
+            callbackPopup.style.display = 'none';
+          }, 0);
         })
         .catch((error) => {
+          target.reset();
           thanksModal.style.display = 'block';
           formContentText.textContent = errorMessage;
           console.error(error);
+          setTimeout(() => {
+            freeVisitPopup.style.display = 'none';
+          }, 0);
+          setTimeout(() => {
+            callbackPopup.style.display = 'none';
+          }, 0);
         });
     });
   });

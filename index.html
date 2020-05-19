@@ -27,9 +27,9 @@
                         <div class="club-select">
                             <div class="clubs-list">
                                 <p>Выбрать клуб</p>
-                                <ul id="dropdown-list">
-                                    <li class="dropdown-list__item"><a href="./mozaika.html">Тело мозаика</a></li>
-                                    <li class="dropdown-list__item"><a href="./schelkovo.html">Тело щелково</a></li>
+                                <ul>
+                                    <li><a href="./mozaika.html">Тело мозаика</a></li>
+                                    <li><a href="./schelkovo.html">Тело щелково</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -210,11 +210,13 @@
             <div class="form-wrapper">
                 <form name="banner-form" id="banner-form" action="#" method="post">
                     <input type="hidden" name="form_name" value=" Записаться на визит">
-                    <input class="not-empty" name="name" type="text" placeholder="Ваше имя...">
-                    <input class="not-empty" type="tel" name="phone" id="phone" placeholder="Ваш номер телефона...">
+                    <input class="not-empty" name="name" type="text" placeholder="Ваше имя..." required>
+                    <input class="not-empty" type="tel" name="phone" id="phone" placeholder="Ваш номер телефона..."
+                        required>
                     <button name="send" class="btn" type="submit">Записаться</button>
                     <p class="personal-data">
-                        <input type="checkbox" id="check1"><label for="check1">Я согласен на обработку персональных
+                        <input type="checkbox" id="check1"><label for="check1" required>Я согласен на обработку
+                            персональных
                             данных</label>
                     </p>
                 </form>
@@ -349,12 +351,13 @@
                             <div class="price-message" id="price-total">1999</div>
                         </div>
                         <input type="hidden" name="form_name" value="Заказать карту">
-                        <p class="input-text"><input class="not-empty" name="name" type="text"
-                                placeholder="Ваше имя..."></p>
+                        <p class="input-text"><input class="not-empty" name="name" type="text" placeholder="Ваше имя..."
+                                required></p>
                         <p class="input-text"><input class="not-empty" type="tel" name="phone" id="callback_form-phone"
-                                placeholder="Ваш номер телефона..."></p>
+                                placeholder="Ваш номер телефона..." required></p>
                         <p class="personal-data">
-                            <input type="checkbox" id="card_check"><label for="card_check">Я согласен на обработку
+                            <input type="checkbox" id="card_check" required><label for="card_check">Я согласен на
+                                обработку
                                 персональных данных</label>
                         </p>
                         <p class="submit">
@@ -393,15 +396,15 @@
                             <div class="choose-club">
                                 <h5>Выбрать клуб</h5>
                                 <div class="club">
-                                    <input type="radio" id="footer_leto_mozaika" name="club-name" value="mozaika"><label
-                                        for="footer_leto_mozaika">
+                                    <input type="radio" id="footer_leto_mozaika" name="club-name" value="mozaika"
+                                        required><label for="footer_leto_mozaika">
                                         <h6>Тело «Мозаика»</h6>
                                         <p>Россия, Москва, 7-я Кожуховская ул.,&nbsp;9</p>
                                     </label>
                                 </div>
                                 <div class="club">
-                                    <input type="radio" id="footer_leto_schelkovo" name="club-name"
-                                        value="schelkovo"><label for="footer_leto_schelkovo">
+                                    <input type="radio" id="footer_leto_schelkovo" name="club-name" value="schelkovo"
+                                        required><label for="footer_leto_schelkovo">
                                         <h6>Тело «Щелково»</h6>
                                         <p>Россия, г. Щелково, ул. Советская, д.&nbsp;16</p>
                                     </label>
@@ -411,7 +414,8 @@
                                 <p>Единый телефон</p>
                                 <p class="tel">+7 (800) 555-64-47</p>
                                 <p class="input-text"><input class="not-empty" type="tel" name="phone"
-                                        id="callback_footer_form-phone" placeholder="Ваш номер телефона..."></p>
+                                        id="callback_footer_form-phone" placeholder="Ваш номер телефона..." required>
+                                </p>
 
                                 <button class="btn callback-btn" type="submit" data-popup="#callback_form">Перезвоните
                                     мне
@@ -457,12 +461,14 @@
                 <form name="callback-form" id="form1" action="#" method="post">
                     <h4>Обратный звонок</h4>
                     <input type="hidden" name="form_name" value=" Обратный звонок">
-                    <p class="input-text"><input class="not-empty" name="name" type="text" placeholder="Ваше имя...">
+                    <p class="input-text"><input class="not-empty" name="name" type="text" placeholder="Ваше имя..."
+                            required>
                     </p>
                     <p class="input-text"><input class="not-empty" type="tel" name="phone" id="callback_form1-phone"
-                            placeholder="Ваш номер телефона..."></p>
+                            placeholder="Ваш номер телефона..." required></p>
                     <p class="personal-data">
-                        <input type="checkbox" id="check"><label for="check">Я согласен на обработку <br>персональных
+                        <input type="checkbox" id="check" required><label for="check">Я согласен на обработку
+                            <br>персональных
                             данных</label>
 
                     </p>
@@ -483,12 +489,14 @@
                 <form name="free-visit-form" id="form2" action="#" method="post">
                     <h4>Записаться на визит</h4>
                     <input type="hidden" name="form_name" value=" Записаться на визит">
-                    <p class="input-text"><input class="not-empty" name="name" type="text" placeholder="Ваше имя...">
+                    <p class="input-text"><input class="not-empty" name="name" type="text" placeholder="Ваше имя..."
+                            required>
                     </p>
                     <p class="input-text"><input class="not-empty" type="tel" name="phone" id="callback_form2-phone"
-                            placeholder="Ваш номер телефона..."></p>
+                            placeholder="Ваш номер телефона..." required></p>
                     <p class="personal-data">
-                        <input type="checkbox" id="check2"><label for="check2">Я согласен на обработку <br>персональных
+                        <input type="checkbox" id="check2" required><label for="check2">Я согласен на обработку
+                            <br>персональных
                             данных</label>
 
                     </p>

@@ -1,21 +1,24 @@
 'use strict';
 
 const changeClub = () => {
-  
-  const dropdownList = document.getElementById('dropdown-list'),
-        dropdownListItem = dropdownList.querySelectorAll('.dropdown-list__item'),
-        clubSelect = document.querySelector('.club-select');
 
-  clubSelect.addEventListener('click', (event) => {
+  const selectClubUlElem = document.querySelector('.clubs-list ul '),
+    bodylElem = document.querySelector('body');
+
+  selectClubUlElem.style.display = 'none';
+  selectClubUlElem.style.zIndex = '1010';
+  bodylElem.addEventListener('click', (event) => {
     let target = event.target;
-    console.log('target: ', target);
-    if (target === dropdownList || target === dropdownListItem[0] || target === dropdownListItem[1]) {
-      return;
+    if (target.matches('.clubs-list > p') && selectClubUlElem.style.display === 'none') {
+      selectClubUlElem.style.display = 'block';
+    } else if (target.closest('.club-select')) {
+      selectClubUlElem.style.display = 'block';
+    } else if (target.closest('.club-select') === null) {
+      selectClubUlElem.style.display = 'none';
+    } else {
+      selectClubUlElem.style.display = 'none';
     }
-    dropdownList.classList.toggle('dropdown-list--active');
-    for (let i = 0; i < dropdownListItem.length; i++) {
-      dropdownListItem[i].classList.toggle('dropdown-list__item--active');
-    }
+
   });
 };
 
